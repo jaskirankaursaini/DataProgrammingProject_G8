@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title> Use of JQuery to Add Edit Delete Table Row </title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+</head>
+<body>
+
+    <div class="container">
+        <h1>University Data</h1>
+        <br />
+        <div id="universitydivcontainer">
+
+        </div>
+    </div>
+	
+	<style>
+body{
+background-image:url('crypto.jpg');
+background-repeat:no-repeat;
+background-attachment:fixed;
+background-size:100% 100% 
+}
+</style>
+</body>
+</html>
+
+<script type="text/javascript">
+	
+var universities=[
+   {
+      "symbol":"btcinr",
+      "baseAsset":"btc",
+      "quoteAsset":"inr",
+      "openPrice":"1834000",
+      "lowPrice":"1800000.0",
+      "highPrice":"1884725.0",
+      "lastPrice":"1848983.0",
+      "volume":"13.01249",
+      "bidPrice":"1830037.0",
+      "askPrice":"1848980.0",
+      "at":1659912779000
+   },
+   {
+      "symbol":"xrpinr",
+      "baseAsset":"xrp",
+      "quoteAsset":"inr",
+      "openPrice":"29.002",
+      "lowPrice":"27.5057",
+      "highPrice":"29.488",
+      "lastPrice":"27.7003",
+      "volume":"189378.4",
+      "bidPrice":"27.7003",
+      "askPrice":"28.5555",
+      "at":1659912779000
+   }
+]
+	
+	
+	
+    convertJsontoHtmlTable();
+    function convertJsontoHtmlTable()
+    {
+
+        //Getting value for table header
+     
+        var tablecolumns = [];
+        for (var i = 0; i < universities.length; i++) {
+            for (var key in universities[i]) {
+                if (tablecolumns.indexOf(key) === -1) {
+                    tablecolumns.push(key);
+                }
+            }
+        }
+
+        //Creating html table and adding class to it
+        var tableuniversity = document.createElement("table");
+        tableuniversity.classList.add("table");
+        tableuniversity.classList.add("table-striped");
+        tableuniversity.classList.add("table-bordered");
+        tableuniversity.classList.add("table-hover")
+
+        //Creating header of the HTML table using
+        //tr
+        var tr = tableuniversity.insertRow(-1);
+
+        for (var i = 0; i < tablecolumns.length; i++) {
+            //header
+            var th = document.createElement("th");
+            th.innerHTML = tablecolumns[i];
+            tr.appendChild(th);
+        }
+
+        // Add university JSON data in table as tr or rows
+        for (var i = 0; i < universities.length; i++) {
+            tr = tableuniversity.insertRow(-1);
+            for (var j = 0; j < tablecolumns.length; j++) {
+                var tabCell = tr.insertCell(-1);
+                tabCell.innerHTML = universities[i][tablecolumns[j]];
+            }
+        }
+
+        //Final step , append html table to the container div
+        var universitydivcontainer = document.getElementById("universitydivcontainer");
+        universitydivcontainer.innerHTML = "";
+        universitydivcontainer.appendChild(tableuniversity);
+    }
+	
+	
+		
+</script>
