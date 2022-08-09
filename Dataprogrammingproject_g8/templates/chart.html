@@ -1,48 +1,35 @@
-<!DOCTYPE HTML>
 <html>
-<head>
-<script>
-window.onload = function() {
+  <head>
+    <h1 style="color:black;font-size:60px;text-align: center;">TOP 10 ASSETS WITH HIGHEST BID PRICE</h1>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['table']});
+      google.charts.setOnLoadCallback(drawTable);
 
-var dataPoints = [];
+      function drawTable() {
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'BaseAssetValue');
+        data.addColumn('number', 'BidPriceAmount');
 
-var chart = new CanvasJS.Chart("chartContainer", {
-	animationEnabled: true,
-	theme: "light2",
-	title: {
-		text: "Daily Sales Data"
-	},
-	axisY: {
-		title: "Units",
-		titleFontSize: 24,
-		includeZero: true
-	},
-	data: [{
-		type: "column",
-		yValueFormatString: "#,### Units",
-		dataPoints: dataPoints
-	}]
-});
+        data.addRows([
+          {% for key,value in data.items() %}
+          ['{{ value['baseAsset'] }}', {{ value['bidPrice'] }} ],
+          {% endfor %}
+        ]);
 
-function addData(data) {
-	for (var i = 0; i < data.length; i++) {
-		dataPoints.push({
-			x: new Date(data[i].date),
-			y: data[i].units
-		});
-	}
-	chart.render();
+        var table = new google.visualization.Table(document.getElementById('table_div'));
 
-}
+        table.draw(data, {showRowNumber: true, width: '100%', height: '100%'});
 
-$.getJSON("https://canvasjs.com/data/gallery/javascript/daily-sales-data.json", addData);
+		var chart = new google.visualization.BarChart(document.getElementById('table_div'));
+      chart.draw(data, {showRowNumber: true, width: '100%', height: '100%'});
+	  }
+    </script>
+  </head>
+  <body>
+    <div id="table_div"></div>
+  </body>
+  
 
-}
-</script>
-</head>
-<body>
-<div id="chartContainer" style="height: 300px; width: 100%;"></div>
-<script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
-<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-</body>
 </html>
+
